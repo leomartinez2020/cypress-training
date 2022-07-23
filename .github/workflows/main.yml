@@ -1,0 +1,26 @@
+name: Cypress Continuous Integration
+on: [pull_request]
+jobs:
+  Test-With-GitHub-Actions:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v3
+
+      - name: Install nodejs
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+          cache: "npm"
+
+      - name: Install
+        run: npm ci
+
+      - name: Run lint
+        run: npm run lint
+
+      - name: Cypress tests
+        uses: cypress-io/github-action@v4
+        with:
+          browser: chrome
+          headed: true
