@@ -1,20 +1,49 @@
+import {PaymentStepPage} from "../page/index";
+import {
+  LoginPage,
+  MenuContentPage,
+  ProductsListPage,
+  ShoppingCartPage,
+  AddressStepPage,
+  ShippingStepPage,
+} from "../page/index";
+
+const menuContentPage = new MenuContentPage();
+const productsListPage = new ProductsListPage();
+const shoppingCartPage = new ShoppingCartPage();
+const loginPage = new LoginPage();
+const addresStepPage = new AddressStepPage();
+const shippingStepPage = new ShippingStepPage();
+const paymentStepPage = new PaymentStepPage();
+
 describe("Buy a t-shirt", () => {
   it("then the t-shirt should be bought", () => {
-    cy.visit("http://automationpractice.com/");
-    cy.get(".sf-menu").children().eq(2).click();
-    cy.get(".ajax_add_to_cart_button").contains("Add to cart").click();
-    cy.get(".button-container").contains("Proceed to checkout").click();
-    cy.get(".cart_navigation").contains("Proceed to checkout").click();
+    menuContentPage.visitMenuContentPage();
+    menuContentPage.goToTShirtMenu();
 
-    cy.get("#email").type("aperdomobo@gmail.com");
-    cy.get("#passwd").type("WorkshopProtractor");
-    cy.get("#SubmitLogin").click();
+    // Add chosen product to cart from product list
+    productsListPage.addToCart();
+    productsListPage.checkout();
 
-    cy.get(".cart_navigation").contains("Proceed to checkout").click();
-    cy.get("#cgv").check();
-    cy.get(".cart_navigation").contains("Proceed to checkout").click();
-    cy.get(".bankwire").click();
+    // Shopping cart summary
+    shoppingCartPage.checkoutCart();
+
+    // Authentication - Login
+    loginPage.login("aperdomobo@gmail.com", "WorkshopProtractor");
+
+    // Address - Already set
+    addresStepPage.checkout();
+
+    // Shipping: Agree to terms and proceed
+    shippingStepPage.checkout();
+
+    // Payment by bank wire
+    paymentStepPage.payByBank();
+
+    // Confirm order
     cy.get("#cart_navigation > .button").click();
-    cy.get("#center_column > div > p > strong").should("have.text", "Your order on My Store is complete.");
+
+    // Assert completed order message on page
+    cy.get("#center_column > div.box > p > strong").should("have.text", "Your order on My Store is complete.");
   });
 });
