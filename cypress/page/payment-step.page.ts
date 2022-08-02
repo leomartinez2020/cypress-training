@@ -1,10 +1,13 @@
 class PaymentStepPage {
     private bankWireTag: string;
     private cartNav: string;
+    private confirmationMessageTag: string;
+    private confirmationMessageText: any;
 
     constructor() {
         this.bankWireTag = ".bankwire";
         this.cartNav = "#cart_navigation > .button";
+        this.confirmationMessageTag = "#center_column > div.box > p > strong";
     }
 
     public payByBank() {
@@ -13,7 +16,8 @@ class PaymentStepPage {
     }
 
     public getConfirmationMessage() {
-        cy.get("#center_column > div.box > p > strong").should("have.text", "Your order on My Store is complete.");
+        this.confirmationMessageText = cy.get(this.confirmationMessageTag);
+        return this.confirmationMessageText;
     }
 }
 

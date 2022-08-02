@@ -18,6 +18,7 @@ const paymentStepPage = new PaymentStepPage();
 
 describe("Buy a t-shirt", () => {
   it("then the t-shirt should be bought", () => {
+    const expectedText = "Your order on My Store is complete.";
     menuContentPage.visitMenuContentPage();
     menuContentPage.goToTShirtMenu();
 
@@ -33,6 +34,7 @@ describe("Buy a t-shirt", () => {
     shippingStepPage.checkout();
 
     paymentStepPage.payByBank();
-    paymentStepPage.getConfirmationMessage();
+    const confirmationMessage = paymentStepPage.getConfirmationMessage();
+    confirmationMessage.should("have.text", expectedText);
   });
 });
