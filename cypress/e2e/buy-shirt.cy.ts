@@ -34,7 +34,6 @@ describe("Buy a t-shirt", () => {
     shippingStepPage.checkout();
 
     paymentStepPage.payByBank();
-    const confirmationMessage = paymentStepPage.getConfirmationMessage();
-    confirmationMessage.should("have.text", expectedText);
+    paymentStepPage.getConfirmationMessage().should("have.text", expectedText);
   });
 });

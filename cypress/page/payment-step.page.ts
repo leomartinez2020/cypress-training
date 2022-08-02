@@ -16,8 +16,7 @@ class PaymentStepPage {
     }
 
     public getConfirmationMessage() {
-        this.confirmationMessageText = cy.get(this.confirmationMessageTag);
-        return this.confirmationMessageText;
+        return cy.get(this.confirmationMessageTag);
     }
 }
 
