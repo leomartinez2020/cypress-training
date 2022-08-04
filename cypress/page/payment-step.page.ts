@@ -2,12 +2,11 @@ class PaymentStepPage {
     private bankWireTag: string;
     private cartNav: string;
     private confirmationMessageTag: string;
-    private confirmationMessageText: any;
 
     constructor() {
         this.bankWireTag = ".bankwire";
         this.cartNav = "#cart_navigation > .button";
-        this.confirmationMessageTag = "#center_column > div.box > p > strong";
+        this.confirmationMessageTag = ".cheque-indent > .dark";
     }
 
     public payByBank() {
